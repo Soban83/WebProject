@@ -1,15 +1,6 @@
 import React from "react";
 import { Navbar, Sidebar } from "../../components";
-import {
-  Box,
-  Button,
-  TextField,
-  createTheme,
-  ThemeProvider,
-  Typography,
-  Grid,
-  Toolbar,
-} from "@mui/material";
+import { Box, Button, TextField, createTheme, ThemeProvider, Typography, Grid, Toolbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";

@@ -34,7 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Sellers = () => {
+const SortCustomers = () => {
   const [seller, setseller] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [search, setSearch] = useState('');
@@ -52,20 +52,20 @@ const Sellers = () => {
   
   const handleSubmitDelete = async (email) => {
     try {
-      await axios.delete(`/delete-seller/${email}`);
-      console.log('Seller deleted successfully');
+      await axios.delete(`/delete-customer/${email}`);
+      console.log('Customer deleted successfully');
       setseller((prevPolicies) => prevPolicies.filter((seller) => seller.email !== email));
-      navigate('../Sellers'); // Navigate after the delete request is complete
+      navigate('../Customers'); // Navigate after the delete request is complete
     } catch (error) {
-      console.error('Failed to delete Seller:', error);
-      alert('Failed to delete Seller');
+      console.error('Failed to delete Customer:', error);
+      alert('Failed to delete Customer');
       // Handle error condition (e.g., show error message to the user)
     }
   };
 
   const handleSubmitFlag = async (email) => {
     try {
-      await axios.put(`/increment-flag-count/${email}`);
+      await axios.put(`/increment-customer-flag-count/${email}`);
       console.log('Flag count incremented successfully');
       setseller((prevSellers) =>
         prevSellers.map((seller) =>
@@ -86,7 +86,7 @@ const Sellers = () => {
   useEffect(() => {
     (async () => {
       axios
-        .get("/get-all-sellers", {
+        .get("/filter-customers-by-name", {
           crossdomain: true,
         })
         .then((response) => {
@@ -130,7 +130,7 @@ const Sellers = () => {
             variant="h2"
             color={"#2E3B55"}
           >
-            <i>KernelKart</i> Sellers
+            <i>KernelKart</i> Customers
           </Typography>
           <Box
             sx={{
@@ -194,7 +194,6 @@ const Sellers = () => {
                   </TableRow>
                 </TableHead>
 
-              
 
                 <TableBody>
           {searchResults.length > 0 ? (
@@ -288,7 +287,7 @@ const Sellers = () => {
                       </StyledTableCell>
 
                       <StyledTableCell align="center" marginLeft={"1rem"}>
-                     
+                      
                         
                         <Button
                           variant="text"
@@ -321,4 +320,4 @@ const Sellers = () => {
   );
 };
 
-export default Sellers;
+export default SortCustomers;

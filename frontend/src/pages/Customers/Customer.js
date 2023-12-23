@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Sidebar } from "../../components";
-import { Box, Button, TextField, createTheme, ThemeProvider, Typography, Grid, Toolbar } from "@mui/material";
+import {Box, Button,TextField, createTheme, ThemeProvider, Typography, Grid, Toolbar } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -34,44 +34,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Sellers = () => {
-  const [seller, setseller] = useState([]);
+const Customer = () => {
+  const [customer, setcustomer] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [search, setSearch] = useState('');
 
   const navigate = useNavigate();
 
     const handleSort = (e) => {
-        navigate("/SortSellers");
+        navigate("/SortCustomers");
     }
 
   const handleSubmitAdd = (e) => {
    
-    navigate("/AddSeller");
+    navigate("/AddCustomer");
   };
   
   const handleSubmitDelete = async (email) => {
     try {
-      await axios.delete(`/delete-seller/${email}`);
-      console.log('Seller deleted successfully');
-      setseller((prevPolicies) => prevPolicies.filter((seller) => seller.email !== email));
-      navigate('../Sellers'); // Navigate after the delete request is complete
+      await axios.delete(`/delete-customer/${email}`);
+      console.log('Customer deleted successfully');
+      setcustomer((prevPolicies) => prevPolicies.filter((customer) => customer.email !== email));
+      navigate('../Customers'); // Navigate after the delete request is complete
     } catch (error) {
-      console.error('Failed to delete Seller:', error);
-      alert('Failed to delete Seller');
+      console.error('Failed to delete Customer:', error);
+      alert('Failed to delete Customer');
       // Handle error condition (e.g., show error message to the user)
     }
   };
 
   const handleSubmitFlag = async (email) => {
     try {
-      await axios.put(`/increment-flag-count/${email}`);
+      await axios.put(`/increment-customer-flag-count/${email}`);
       console.log('Flag count incremented successfully');
-      setseller((prevSellers) =>
-        prevSellers.map((seller) =>
-          seller.email === email
-            ? { ...seller, flagCount: seller.flagCount + 1 }
-            : seller
+      setcustomer((prevcustomer) =>
+        prevcustomer.map((customer) =>
+        customer.email === email
+            ? { ...customer, flagCount: customer.flagCount + 1 }
+            : customer
         )
       );
     } catch (error) {
@@ -86,11 +86,11 @@ const Sellers = () => {
   useEffect(() => {
     (async () => {
       axios
-        .get("/get-all-sellers", {
+        .get("/get-all-customers", {
           crossdomain: true,
         })
         .then((response) => {
-          setseller(response.data);
+          setcustomer(response.data);
           // setText(response.data.text);
           // setAuthor(response.data.author);
         });
@@ -101,7 +101,7 @@ const Sellers = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`/get-seller-by-email/${search}`);
+      const response = await axios.get(`/get-customer-by-email/${search}`);
       if (response.status === 200) {
         setSearchResults(response.data);
       } else {
@@ -130,7 +130,7 @@ const Sellers = () => {
             variant="h2"
             color={"#2E3B55"}
           >
-            <i>KernelKart</i> Sellers
+            <i>KernelKart</i> Customers
           </Typography>
           <Box
             sx={{
@@ -144,14 +144,14 @@ const Sellers = () => {
               sx={{ backgroundColor: "#2E3B55", marginBottom: "20px" }}
                 onClick={handleSubmitAdd}
             >
-              Create New Seller
+              Create New Customer
             </Button>
             <Button
               variant="contained"
               sx={{ backgroundColor: "#2E3B55", marginBottom: "20px" }}
                 onClick={handleSort}
             >
-              Sort all Sellers
+              Sort all Customers
             </Button>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <TextField
@@ -194,41 +194,41 @@ const Sellers = () => {
                   </TableRow>
                 </TableHead>
 
-              
+               
 
                 <TableBody>
           {searchResults.length > 0 ? (
-            searchResults.map((sellers) => (
-              <StyledTableRow key={sellers._id}>
+            searchResults.map((customers) => (
+              <StyledTableRow key={customers._id}>
               <StyledTableCell component="th" scope="row">
-                        {sellers._id}
+                        {customers._id}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.name}
+                        {customers.name}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {sellers.email}
+                        {customers.email}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.password}
+                        {customers.password}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.sellerId}
+                        {customers.customerId}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.contact}
+                        {customers.contact}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.city}
+                        {customers.city}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.province}
+                        {customers.province}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.address}
+                        {customers.address}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.flagCount}
+                        {customers.flagCount}
                       </StyledTableCell>
 
                       <StyledTableCell align="center" marginLeft={"1rem"}>
@@ -237,14 +237,14 @@ const Sellers = () => {
                         <Button
                           variant="text"
                           style={{ color: "red" }}
-                          onClick={() => handleSubmitDelete(sellers.email)}
+                          onClick={() => handleSubmitDelete(customers.email)}
                         >
                           Delete
                         </Button>
                         <Button
                           variant="text"
                           style={{ color: "#2E3B55" }}
-                          onClick={() => handleSubmitFlag(sellers.email)}
+                          onClick={() => handleSubmitFlag(customers.email)}
                         >
                           Flag
                         </Button>
@@ -253,47 +253,47 @@ const Sellers = () => {
               </StyledTableRow>
             ))
           ) : (
-            seller.map((sellers) => (
+            customer.map((customers) => (
                 
-              <StyledTableRow key={sellers._id}>
+              <StyledTableRow key={customers._id}>
               <StyledTableCell component="th" scope="row">
-                        {sellers._id}
+                        {customers._id}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.name}
+                        {customers.name}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {sellers.email}
+                        {customers.email}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.password}
+                        {customers.password}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.sellerId}
+                        {customers.customerId}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.contact}
+                        {customers.contact}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.city}
+                        {customers.city}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.province}
+                        {customers.province}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.address}
+                        {customers.address}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {sellers.flagCount}
+                        {customers.flagCount}
                       </StyledTableCell>
 
                       <StyledTableCell align="center" marginLeft={"1rem"}>
-                     
+                       
                         
                         <Button
                           variant="text"
                           style={{ color: "red" }}
-                          onClick={() => handleSubmitDelete(sellers.email)}
+                          onClick={() => handleSubmitDelete(customers.email)}
                           
                         >
                           Delete
@@ -301,7 +301,7 @@ const Sellers = () => {
                         <Button
                           variant="text"
                           style={{ color: "#2E3B55" }}
-                          onClick={() => handleSubmitFlag(sellers.email)}
+                          onClick={() => handleSubmitFlag(customers.email)}
                         >
                           Flag
                         </Button>
@@ -321,4 +321,4 @@ const Sellers = () => {
   );
 };
 
-export default Sellers;
+export default Customer;
