@@ -31,6 +31,13 @@ function App() {
        
         <Route path="/Orders" element={<Orders /> } />
 
+        {/* Policy */}
+        <Route path="/Policy" element={<Policy /> } />
+        <Route path="/PolicyEdit/:policyId" element={<PolicyEdit /> } />
+        <Route path="/create-policy" element={<AddPolicy /> } />
+        {/* Analytics */}
+        <Route path="/Analytics" element={<Analytics /> } />
+
       </Routes>
     </BrowserRouter>
     </div>
